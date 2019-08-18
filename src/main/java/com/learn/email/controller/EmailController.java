@@ -14,7 +14,7 @@ public class EmailController {
     }
 
     @GetMapping(produces = "application/json")
-    private String home(){
+    public String home(){
         return this.emailService.getHome();
     }
 
