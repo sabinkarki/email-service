@@ -3,12 +3,14 @@ package com.learn.email.controller;
 import com.learn.email.model.Email;
 import com.learn.email.service.EmailService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController()
+@RestController
 public class EmailController {
 
     final private EmailService emailService;
@@ -22,9 +24,10 @@ public class EmailController {
         return this.emailService.getHome();
     }
 
-    @PostMapping(produces = "application/json")
-    public ResponseEntity<Boolean> sendEmail(Email email) {
+    @PostMapping( value = "/email", produces = "application/json")
+    public ResponseEntity<Boolean> sendEmail(@RequestBody Email email) {
         email.setContent(getEmailHtmlContent(email.getContent()));
+        email.setMimeType(MediaType.TEXT_HTML_VALUE);
         boolean isSend = this.emailService.sendEmail(email);
         return new ResponseEntity<>(isSend, HttpStatus.OK);
     }

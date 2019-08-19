@@ -36,15 +36,17 @@ public class EmailServiceImpl implements EmailService {
         prop.put("mail.smtp.host", mapProperties.get("host"));
         prop.put("mail.smtp.port", mapProperties.get("port"));
         prop.put("mail.smtp.auth", mapProperties.get("authrname"));
-        prop.put("mail.smtp.starttls.enable", mapProperties.get("starttls.enable"));
+        prop.put("mail.smtp.starttls.enable", mapProperties.get("starttls"));
 
 
         //  properties.put("mail.smtp.port", "name of email server");
         //Session session = Session.getInstance(prop);
+        String userName = mapProperties.get("username");
+        String password = mapProperties.get("password");
         Session session = Session.getInstance(prop,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(mapProperties.get("username"), mapProperties.get("password"));
+                        return new PasswordAuthentication(userName, password);
                     }
                 });
 
@@ -90,14 +92,14 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public String[] getAllowedAddress(String[] addresses) {
-            List<String> result = new ArrayList<>();
-            if (ArrayUtils.isNotEmpty(addresses)) {
-                List<String> allowedDomainsCollection = Arrays.asList(StringUtils.split(allowedDomains, ","));
-                for (int i = 0; i < addresses.length; i++) {
-                    if (allowedDomainsCollection.contains(addresses[i].split("@")[1].toLowerCase()))
-                        result.add(addresses[i]);
-                }
+        List<String> result = new ArrayList<>();
+        if (ArrayUtils.isNotEmpty(addresses)) {
+            List<String> allowedDomainsCollection = Arrays.asList(StringUtils.split(allowedDomains, ","));
+            for (int i = 0; i < addresses.length; i++) {
+                if (allowedDomainsCollection.contains(addresses[i].split("@")[1].toLowerCase()))
+                    result.add(addresses[i]);
             }
-            return result.toArray(new String[0]);
         }
+        return result.toArray(new String[0]);
+    }
 }
