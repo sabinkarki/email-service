@@ -65,7 +65,8 @@ public class EmailServiceTest {
         sb.append("Love You");
         sb.append("</body></html>");
 
-        email.setTo(new String[]{"****", ""});
+        email.setTo(new String[]{"sabin.karki.900@gmail.com"});
+        email.setFrom("nibaserc@gmail.com");
         email.setSubject("I Love You");
         email.setMimeType(MediaType.TEXT_HTML_VALUE);
         email.setContent(sb.toString());

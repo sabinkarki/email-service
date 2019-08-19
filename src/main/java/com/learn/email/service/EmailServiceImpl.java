@@ -88,16 +88,16 @@ public class EmailServiceImpl implements EmailService {
         return "Hello Friend";
     }
 
-    protected String[] getAllowedAddress(String[] addresses) {
-        List<String> result = new ArrayList<>();
-        if (ArrayUtils.isNotEmpty(addresses)) {
-            List<String> allowedDomainsCollection = Arrays.asList(StringUtils.split(allowedDomains, ","));
-            for (int i = 0; i < addresses.length; i++) {
-                if (allowedDomainsCollection.contains(addresses[i].split("@")[1].toLowerCase()))
-                    result.add(addresses[i]);
+    @Override
+    public String[] getAllowedAddress(String[] addresses) {
+            List<String> result = new ArrayList<>();
+            if (ArrayUtils.isNotEmpty(addresses)) {
+                List<String> allowedDomainsCollection = Arrays.asList(StringUtils.split(allowedDomains, ","));
+                for (int i = 0; i < addresses.length; i++) {
+                    if (allowedDomainsCollection.contains(addresses[i].split("@")[1].toLowerCase()))
+                        result.add(addresses[i]);
+                }
             }
+            return result.toArray(new String[0]);
         }
-        return result.toArray(new String[0]);
-    }
-
 }

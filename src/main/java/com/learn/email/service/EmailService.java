@@ -6,4 +6,5 @@ public interface EmailService {
 
      Boolean sendEmail(Email email);
      String getHome();
+     String[] getAllowedAddress(String[] addresses);
 }
